@@ -20,19 +20,13 @@ void loop() {
     int distance2 = getDistance(trigPin2, echoPin2);
     int distance3 = getDistance(trigPin3, echoPin3);
 
-    bool objectDetected = (distance1 <= warningDistance || distance2 <= warningDistance || distance3 <= warningDistance);
-    bool objectClose = (distance1 <= criticalDistance || distance2 <= criticalDistance || distance3 <= criticalDistance);
-
-    if (objectClose) {
-        alertLED(true);
-        alertBuzzer(true);
-    } else if (objectDetected) {
-        alertLED(false);
-        alertBuzzer(false);
-    } else {
-        digitalWrite(Led, LOW);
-        ledcWrite(buzzerChannel, 0);
+    if (currentMovement == BACKWARD && (distance1 <= criticalDistance || distance2 <= criticalDistance || distance3 <= criticalDistance)) {
+        stopMotors();
+        Serial.println("Auto-stop: Obstacle very close while reversing!");
     }
+
+    updateLEDs(distance1, distance2, distance3);
+    updateBuzzer(distance1, distance2, distance3);
 
     if (client) {
         handleClient(client);

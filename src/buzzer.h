@@ -3,14 +3,22 @@
 
 #include <Arduino.h>
 
-// Buzzer pin and PWM settings
 extern const int buzzerPin;
 extern const int buzzerChannel;
-extern const int buzzerFrequency;
+extern const int buzzerFreq;
 extern const int buzzerResolution;
 
-// Function declarations
+enum BuzzerMode {
+    BUZZER_OFF,
+    BUZZER_ON_ONESHOT,
+    BUZZER_ULTRASONIC
+};
+
+extern BuzzerMode currentBuzzerMode;
+
 void setupBuzzer();
 void alertBuzzer(bool fast);
+void setBuzzerMode(BuzzerMode mode);
+void updateBuzzer(int distance1, int distance2, int distance3);
 
 #endif

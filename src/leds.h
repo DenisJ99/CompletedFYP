@@ -3,11 +3,19 @@
 
 #include <Arduino.h>
 
-// LED pin
 extern const int Led;
 
-// Function declarations
+enum LEDMode {
+    LED_OFF,
+    LED_ON,
+    LED_ULTRASONIC
+};
+
+extern LEDMode currentMode;
+
 void setupLED();
 void alertLED(bool fast);
+void setLEDMode(LEDMode mode);
+void updateLEDs(int distance1, int distance2, int distance3);
 
 #endif
